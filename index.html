@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Marriage Project: Marr & Raa</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;400;600&display=swap');
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background: #0a0a0a;
+            color: #fff;
+            font-family: 'Poppins', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        /* Layar Cover buat aktifin musik */
+        #cover {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), url('https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 999;
+            transition: 1s ease-in-out;
+        }
+
+        .btn-buka {
+            padding: 15px 30px;
+            background: #ff4757;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-top: 20px;
+            box-shadow: 0 0 20px rgba(255, 71, 87, 0.5);
+            animation: pulse 2s infinite;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            padding: 40px;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 71, 87, 0.3);
+            text-align: center;
+            max-width: 500px;
+            width: 90%;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+        }
+
+        h1 { font-family: 'Dancing Script', cursive; font-size: 3.5rem; color: #ff4757; margin: 0; }
+        .sub-title { letter-spacing: 3px; font-weight: 300; text-transform: uppercase; font-size: 0.8rem; margin-bottom: 20px; color: #ffa502; }
+
+        #timer { display: flex; justify-content: center; gap: 10px; margin: 30px 0; }
+        .time-segment { background: rgba(255, 71, 87, 0.1); padding: 10px; border-radius: 10px; min-width: 65px; }
+        .time-segment span { display: block; font-size: 1.5rem; font-weight: 600; }
+        .time-segment label { font-size: 0.6rem; text-transform: uppercase; opacity: 0.7; }
+
+        .pesan-cinta { font-size: 0.95rem; line-height: 1.6; margin: 20px 0; color: #e0e0e0; }
+        .footer-note { font-size: 0.7rem; margin-top: 30px; opacity: 0.5; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 15px; }
+        .highlight { color: #ff4757; font-weight: 600; }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="cover">
+        <p style="letter-spacing: 3px; font-size: 0.8rem;">SPECIAL INVITATION FOR RAA</p>
+        <h1 style="font-size: 3rem;">Marr & Raa</h1>
+        <button class="btn-buka" onclick="startWedding()">Buka Undangan</button>
+    </div>
+
+    <audio id="musik" loop>
+        <source src="https://c.top4top.io/m_3699nzkdo0.mp3" type="audio/mpeg">
+    </audio>
+
+    <div class="card">
+        <p class="sub-title">The Wedding of</p>
+        <h1>Marr & Raa</h1>
+        
+        <div class="pesan-cinta">
+           "Biasanya gua cuma sibuk angkat ratusan dus minuman tiap hari, tapi melodi hidup gua baru terasa lengkap pas lu bilang 'Ayo Nikah'. <br><br>
+            Gua nggak butuh nunggu target <span class="highlight">PC 2027</span> atau lulus <span class="highlight">N3 Jepang</span> buat jawab tantangan lu. <br>
+            Di tanggal 19 ini, mari kita 'Export' masa depan bareng-bareng!"<br><br>
+            Yudh nnti tanggal 19 kita nikah.
+        </div>
+
+        <div id="timer">
+            <div class="time-segment"><span id="days">00</span><label>Hari</label></div>
+            <div class="time-segment"><span id="hours">00</span><label>Jam</label></div>
+            <div class="time-segment"><span id="minutes">00</span><label>Menit</label></div>
+            <div class="time-segment"><span id="seconds">00</span><label>Detik</label></div>
+        </div>
+
+        <p style="font-size: 0.9rem;">📅 19 Februari 2026 | 📍 Hati masing-masing</p>
+
+        <div class="footer-note">
+            Project: AmarSenpai <br>
+            Brought to you by AmarSenpai System
+        </div>
+    </div>
+
+    <script>
+        function startWedding() {
+            // Putar Musik
+            const audio = document.getElementById('musik');
+            audio.play().catch(e => console.log("Gagal putar audio:", e));
+
+            // Sembunyikan Cover
+            const cover = document.getElementById('cover');
+            cover.style.opacity = '0';
+            setTimeout(() => {
+                cover.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }, 1000);
+        }
+
+        const targetDate = new Date('February 19, 2026 00:00:00').getTime();
+
+        const updateTimer = () => {
+            const now = new Date().getTime();
+            const diff = targetDate - now;
+
+            if (diff < 0) {
+                document.getElementById('timer').innerHTML = "<h3>HARI INI GAS KUA! 💍</h3>";
+                return;
+            }
+
+            const d = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const s = Math.floor((diff % (1000 * 60)) / 1000);
+
+            document.getElementById('days').innerText = d.toString().padStart(2, '0');
+            document.getElementById('hours').innerText = h.toString().padStart(2, '0');
+            document.getElementById('minutes').innerText = m.toString().padStart(2, '0');
+            document.getElementById('seconds').innerText = s.toString().padStart(2, '0');
+        };
+
+        setInterval(updateTimer, 1000);
+        updateTimer();
+    </script>
+</body>
+</html>
